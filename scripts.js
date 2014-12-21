@@ -337,7 +337,7 @@ function najdiMeritve(){
 
 function najdiKriticneMeritve() {
 	sessionId = getSessionId();
-	ehrId = $("#prikaziGrafEHR").val();
+	ehrId = $("#prikaziMeritveEHR").val();
 	$.ajax({
 		url: baseUrl + "/demographics/ehr/" + ehrId + "/party",
 		type: 'GET',
