@@ -484,7 +484,7 @@ function zdravniki() {
 function initialize() {
 	//directionsDisplay = new google.maps.DirectionsRenderer();
 	map = new google.maps.Map(document.getElementById('map_canvas'), {
-		zoom: 20
+		zoom: 10
 	});
 
 	// Try HTML5 geolocation
