@@ -357,11 +357,11 @@ function najdiKriticneMeritve() {
 				"contains COMPOSITION a "+
 				"contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.blood_pressure.v1] "+
 				"where "+
-					"a_a/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude>125.0 and "+
+					"a_a/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude>140.0 and "+
 					"a_a/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/units='mm[Hg]' or "+
-					"a_a/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude>85.0 and "+
+					"a_a/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude>90.0 and "+
 					"a_a/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/units='mm[Hg]' or "+
-					"a_a/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude<85.0 and "+
+					"a_a/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude<80.0 and "+
 					"a_a/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/units='mm[Hg]' or "+
 					"a_a/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude<55.0 and "+
 					"a_a/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/units='mm[Hg]' "+
@@ -484,7 +484,7 @@ function zdravniki() {
 function initialize() {
 	//directionsDisplay = new google.maps.DirectionsRenderer();
 	map = new google.maps.Map(document.getElementById('map_canvas'), {
-		zoom: 10
+		zoom: 15
 	});
 
 	// Try HTML5 geolocation
