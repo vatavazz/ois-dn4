@@ -198,7 +198,7 @@ function ustvariTeste(){
 		merTlaka = zalaP;
 	}
 
-	alert("Wha");
+	//alert("Wha");
 	ustvariMeritev(ehrst, 2014-4-1, merTlaka[0], merTlaka[1]);
 	ustvariMeritev(ehrst, 2014-4-8, merTlaka[2], merTlaka[3]);
 	ustvariMeritev(ehrst, 2014-4-15, merTlaka[4], merTlaka[5]);
