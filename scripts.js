@@ -204,7 +204,7 @@ function ustvariTeste(){
 	ustvariMeritev(ehrst, "2014-4-15", merTlaka[4], merTlaka[5]);
 	ustvariMeritev(ehrst, "2014-4-22", merTlaka[6], merTlaka[7]);
 	ustvariMeritev(ehrst, "2014-4-29", merTlaka[8], merTlaka[9]);
-	ustvariMeritev(ehrst, "2014-5-62", merTlaka[10], merTlaka[11]);
+	ustvariMeritev(ehrst, "2014-5-6", merTlaka[10], merTlaka[11]);
 	ustvariMeritev(ehrst, "2014-5-13", merTlaka[12], merTlaka[13]);
 	ustvariMeritev(ehrst, "2014-5-20", merTlaka[14], merTlaka[15]);
 	ustvariMeritev(ehrst, "2014-5-27", merTlaka[16], merTlaka[17]);
