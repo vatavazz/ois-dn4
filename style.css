@@ -1,0 +1,36 @@
+body {
+	/* background-color: #337ab7; */
+	height: 100%;
+}
+
+.container {
+	background-color: white;
+	height: 100vh;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+#map_canvas {
+	height: 500px; 
+	width: 100%;
+}
+
+#map_canvas img {
+  max-width: none;
+  width: auto;
+  display:inline;
+}
