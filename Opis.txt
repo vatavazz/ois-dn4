@@ -1,0 +1,9 @@
+Opis osnovne ideje rešitve: Aplikacija omogoča nadzorovanje spreminjanja krvnega pritiska pri uporabniku. Uporabnik lahko vnese posamezne meritve krvnega tlaka ki jih opravi sam ali pri zdravniku. Meritve se zapišejo v kartoteko, ki jo lahko uporabnik kadarkoli v prihodnosti pregleda. Spletna aplikacija omogoča tudi grafičen prikaz spreminjanja krvnega pritiska čez čas, ter hitro dostopne podatke zdravnikov ter najbližjih zdravstvenih ustanov v primeru nuje. Poleg tega ponuja možnost generiranja treh testnih pacientov s posebnimi primeri opazovanja krvnega pritiska čez obdobje dveh mesecev:
+-Kristina Kröte - krvni tlak je višji od idealnega (120/80). Čeprav lahko krvni tlak močno niha, se Kristinin v roku dveh mesecev vidno ne popravi.
+- Alana Dysarsz - a prav tako visok tlak, a se drži zdravnikovih nasvetov in zdravil, zato ji krvni tlak pade na manj nevarno vrednost.
+- Zala Vrhunc - je obremenjena študentka medicine, in ima nižji krvni tlak kot idealno. Posledično jo včasih mučijo vrtoglavice, migrene, in druge slabosti.
+
+Zunanji vir podatkov: zdravniki.org, google maps. Aplikacija s spletne strani zdravniki.org prikaže nekatere slovenske kardiologe, ki so vpisani v bazo podatkov zdravniki.org, ter posreduje povezavo do njihovega profila na omenjeni strani. Iz google maps si aplikacija izposodi Google Maps API, katerega uproabi za določanje trenutne lokacije uporabnika in iskanje najbližjih zdravstvenih ustanov v primeru nevarnosti.
+
+Izvorna koda: http://github.com/vatavazz/ois-dn4
+Delujoča spletna stran: http://vatavazz.github.io/ois-dn4

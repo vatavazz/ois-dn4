@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="text/html">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+		<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+		<script src="http://d3js.org/d3.v3.min.js"></script>
+		<script src="http://d3js.org/d3.v3.js"></script>
+
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+
+		<link href="style.css" rel="stylesheet">
+		<script src="scripts.js"></script>
+
+		<title>OpenEHR</title>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+					<h1>OpenEHR: Nadzornik pritiska</h1>
+
+					<div class="tabbable" id="tabs">
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="#panel-0" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Pacient</a></li>
+							<li><a href="#panel-1" data-toggle="tab"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Vnesi meritev</a></li>
+							<li><a href="#panel-2" data-toggle="tab"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Meritve</a></li>
+							<li><a href="#panel-3" data-toggle="tab"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Graf</a></li>
+							<li><a href="#panel-4" data-toggle="tab"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Zdravniki</a></li>
+							<li><a href="#panel-5" data-toggle="tab" id="maptab"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Zdravstvene ustanove</a></li>
+                            <li><a href="#panel-6" data-toggle="tab" id="maptab"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Pomoč</a></li>
+						</ul>
+
+						<div class="tab-content">
+							<div class="tab-pane active" id="panel-0">
+                                <div class="col-md-4 column">
+                                    <h3>Ustvari pacienta</h3>
+                                    <form class>
+                                    	<fieldset>
+                                    	<select class="form-control input-sm" id="ustvariPac"><option value=""></option><option value="Kristina,Kröte,1989-04-24">Kristina Kröte</option><option value="Zala,Vrhunc,1992-11-24">Zala Vrhunc</option><option value="Alana,Dysarsz,1996-1-19">Alana Dysarsz</option></select><br />
+                                    	<input id="pacientIme" type="text" class="form-control input-mini" placeholder="Ime"><br />
+                                    	<input id="pacientPriimek" type="text" class="form-control input-mini" placeholder="Priimek"><br />
+                                    	<input id="pacientRojstni" type="text" class="form-control input-mini" placeholder="Rojstni datum (llll-mm-dd)"><br />
+                                    	<button type="button" class="btn btn-primary btn-default" onclick="ustvariPacienta()">Ustvari novega pacienta</button>
+                                    	</fieldset>
+                                    </form><br />
+                                </div>
+
+                                <div class="col-md-4 column">
+                                    <h3>Najdi pacienta</h3>
+                                    <form>
+                                    	<fieldset>
+                                    	<input id="najdiPacIme" type="text" class="form-control input-mini" placeholder="Ime"><br />
+                                    	<input id="najdiPacPriimek" type="text" class="form-control input-mini" placeholder="Priimek"><br />
+                                    	<button type="button" class="btn btn-primary btn-default" onclick="najdiPacienta()">Najdi pacienta</button>
+                                        <button type="button" class="btn btn-primary btn-default" onclick="pobrisiPacienta()">Pobriši pacienta</button>
+                                    	</fieldset>
+                                    </form>
+                                    <br />
+                                </div>
+
+    							<div class="col-md-4 column">
+    								<h3>Prikaži podatke</h3>
+    								<form>
+        								<fieldset>
+        								<select class="form-control input-sm" id="prikaziPodatkeDD"><option value=""></option><option value="Kristina">Kristina Kröte</option><option value="Zala">Zala Vrhunc</option><option value="Alana">Alana Dysarsz</option></select><br />
+        								<input id="prikaziPodatkeEHR" type="text" class="form-control input-mini" placeholder="EHR pacienta"><br />
+        								<button type="button" class="btn btn-primary btn-default" onclick="prikaziPodatkePacienta()">Prikaži podatke</button>
+        								</fieldset>
+    								</form>
+    							</div>
+
+    							<div class="col-md-12 column">
+    								<div class="table-responsive">
+        								<table class="table table-striped">
+        									<thead id="tablePodHeader"></thead>
+        									<tbody id="tablePodatki"></tbody>
+        								</table>
+    								</div>
+    							</div>
+							</div>
+
+							<div class="tab-pane" id="panel-1">
+								
+								<div class="col-md-4 column">
+									<h3>Dodaj novo meritev</h3>
+									<form>
+									<fieldset>
+									<select class="form-control input-sm" id="dodajMeritevDD"><option value=""></option><option value="Kristina">Kristina Kröte</option><option value="Zala">Zala Vrhunc</option><option value="Alana">Alana Dysarsz</option></select><br />
+									<input id="dodajMeritevEHR" type="text" class="form-control input-mini" placeholder="EHR pacienta"><br />
+									<input id="dodajMeritevCas" type="text" class="form-control input-mini" placeholder="Čas meritve (llll-mm-dd)"><br />
+									<input id="dodajMeritevSis" type="text" class="form-control input-mini" placeholder="Sistolični pritisk"><br />
+									<input id="dodajMeritevDia" type="text" class="form-control input-mini" placeholder="Diastolični pritisk"><br />
+									<button type="button" class="btn btn-primary btn-default" onclick="ustvariRocnoMeritev()">Dodaj meritev</button>
+									</fieldset>
+									</form>
+                                    <h3>Testni podatki</h3>
+                                    <form>
+                                    <fieldset>
+                                    <select class="form-control input-sm" id="ustvariPodatkeDD"><option value=""></option><option value="Kristina">Kristina Kröte</option><option value="Zala">Zala Vrhunc</option><option value="Alana">Alana Dysarsz</option></select><br />
+                                    <button type="button" class="btn btn-primary btn-default" onclick="ustvariTeste()">Zgeneriraj testne podatke</button>
+                                    </fieldset>
+                                    </form>
+								</div>
+								<div class="col-md-8 column">
+								<div id="ustvariMeritevResponse"></div>
+								</div>
+							</div>
+
+							<div class="tab-pane" id="panel-2">
+								<div class="col-md-4 column">
+									<h3>Prikaži meritve</h3>
+									<form>
+									<fieldset>
+									<select class="form-control input-sm" id="prikaziMeritveDD"><option value=""></option><option value="Kristina">Kristina Kröte</option><option value="Zala">Zala Vrhunc</option><option value="Alana">Alana Dysarsz</option></select><br />
+									<input id="prikaziMeritveEHR" type="text" class="form-control input-mini" placeholder="EHR pacienta"><br />
+									<button type="button" class="btn btn-primary btn-default" onclick="najdiMeritve()">Prikaži vse meritve</button>
+									<button type="button" class="btn btn-primary btn-default" onclick="najdiKriticneMeritve()">Prikaži kritične meritve</button>
+									</fieldset>
+									</form>
+								</div>
+								<div class="col-md-8 column">
+                                    <br />
+									<div class="table-responsive">
+									<table class="table table-striped">
+										<thead id="mhead"></thead>
+										<tbody id="mbody"></tbody>
+									</table>
+									</div>
+								</div>
+							</div>
+
+							<div class="tab-pane" id="panel-3">
+								<div class="col-md-4 column">
+									<h3>Graf opravljenih meritev</h3>
+									<form>
+									<fieldset>
+									<select class="form-control input-sm" id="prikaziGrafDD"><option value=""></option><option value="Kristina">Kristina Kröte</option><option value="Zala">Zala Vrhunc</option><option value="Alana">Alana Dysarsz</option></select><br />
+									<input id="prikaziGrafEHR" type="text" class="form-control input-mini" placeholder="EHR pacienta"><br />
+									<button type="button" class="btn btn-primary btn-default" onclick="najdiZaGraf()">Prikaži meritve</button>
+									</fieldset>
+									</form>
+								</div>
+								<div class="col-md-8 column">
+    								<br />
+    								<span id="lazanja"></span>
+								</div>
+							</div>
+
+    						<div class="tab-pane" id="panel-4">
+    							<div class="col-md-6 column">
+    									<h3>Zdravniki</h3>
+                                        Seznam nekaterih kardiologov v Sloveniji, vpisanih v bazo zdravniki.org.<br/>
+                                        <div id="zdravniki"></div>
+    							</div>
+    						</div>
+
+							<div class="tab-pane" id="panel-5">
+								<div class="col-md-12 column">
+									<h3>Zdravstvene ustanove v bližini</h3>
+                                    <button type="button" class="btn btn-primary btn-default" onclick="initialize()">Najdi bližnje ustanove</button>
+                                    <br /><br />
+                                    <div id="map_canvas"></div>
+								</div>
+							</div>
+
+                            <div class="tab-pane" id="panel-6">
+                            <div class="col-md-12 column">
+                            <h3>Pomoč pri uporabi nadzornika pritiska</h3>
+                            Za generiranje testnih pacientov, najprej izberite eno od možnih oseb pod zavihkom "Pacient", nato kliknite "ustvari novega pacienta".
+                            Zatem je potrebno generiranje podatkov. Pod zavihkom "Vnesi meritev" izberite osebo, ki ste jo prej ustvarili, in kliknite na "zgeneriraj testne podatke". Zatem so podatki pripravljeni na pregled pod zavihki "Meritve" in "Graf". Ker aplikacija nenehno generira nove paciente, lahko le-te pobrišete tako, da vnesete njihovo ime in kliknete na "Pobriši pacienta". To odstrani vse pacientove vnose v bazi podatkov EHR.<br /><br />
+                            Pod zavihkom "Zdravstvene ustanove" lahko, če na to pristanete, na mapi najdete vse zdravstvene centre v vaši bližini.<br /><br />
+                            Pod zavihkom "Zdravniki" je naštetih nekaj specializiranih kardiologov v Sloveniji, skupaj s povezavo na njihov profil na spletni strani zdravniki.org.
+                            </div>
+                            </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
